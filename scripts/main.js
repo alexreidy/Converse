@@ -18,8 +18,7 @@ $('document').ready(function() {
             $('#msgBox').val('');
         }
     });
-    
-    // Count messages
+
     $.post('scripts/ajax.php', { action: 'get_num_rows' }, function(num) {
         total = num;
     });
@@ -27,7 +26,6 @@ $('document').ready(function() {
     interval = setInterval(request, 10);
     $('div.chat').fadeIn(5000);
     
-    // Send message
     $('#msgBox').keypress(function(e) {
         if (e.which == 13) {
             var msg = $('#msgBox').val();
@@ -36,14 +34,13 @@ $('document').ready(function() {
                 waitingOnName = false;
                 name = msg;
             } else {
-                $.post('scripts/ajax.php', { action: 'send', sender: name, message: msg }, function(x) {
+                $.post('scripts/ajax.php', { action: 'send', sender: name, message: msg }, function() {
                     $('#msgBox').val('');
                 });     
             }
         }
     });
     
-    // Request new message and handle related processes
     function request() {
         if (finished) {
             if (!initializing && !failed) {
@@ -90,4 +87,3 @@ $('document').ready(function() {
         }
     }
 });
-
