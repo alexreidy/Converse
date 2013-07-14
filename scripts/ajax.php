@@ -18,12 +18,12 @@ switch($_POST['action']) {
         echo(mysql_num_rows(mysql_query(" SELECT * FROM messages; "))); 
         break;
         
-    case 'request': // Request new message
+    case 'request':
         $current = clean($_POST['current']);
         $next = $current++;
         $success = false;
         
-        for ($i = 0; $i < 25; $i++) { // Check for the specified ('next') message every second
+        for ($i = 0; $i < 25; $i++) {
             if (($result = mysql_query(" SELECT * FROM messages WHERE id={$next}; "))) {
                 $row = mysql_fetch_array($result);
                 if ($row['sender'] != null && $row['message'] != null) {
@@ -34,8 +34,8 @@ switch($_POST['action']) {
             }
             sleep(1);
         }
-        // If message not found, return "timeout"
-        if (! $success) echo("timeout");
+
+        if ( ! $success) echo("timeout");
         break;
 }
 ?>
